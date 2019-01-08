@@ -49,10 +49,12 @@ function afterConnection() {
                     console.log("Insufficient Quantity!");
                 } else {
                     stock -= results.quantity;
-                    connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [stock, chosenId], function (err, eee) {
+                    connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [stock, chosenId], function (err, A) {
                         if (err) throw err;
-                        console.log(eee);
                         var price = response[0].price * results.quantity;
+                        connection.query("UPDATE products SET product_sales = product_sales + ? WHERE item_id = ?", [price, chosenId], function (err, B) {
+                            if (err) throw err;
+                        });
                         console.log("\nTotal cost: " + price);
                     });
 

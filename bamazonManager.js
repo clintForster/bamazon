@@ -104,21 +104,11 @@ function addProduct() {
             type: 'input',
             name: 'whatPrice',
             message: 'What would you like the price of this item to be?',
-            validate: ans =>{
-                if(isNaN(ans) || ans < 0)
-                    return false;
-                return true;
-            }
         },
         {
             type: 'input',
             name: 'howMuch',
             message: 'How many units of that item would you like to add?',
-            validate: ans =>{
-                if(isNaN(ans) || ans < 0 || ans % 1 !==0)
-                    return false;
-                return true;
-            }
         }
     ]).then(function (response) {
         connection.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)", [response.newItem, response.whatDepartment, response.whatPrice, response.howMuch], function (err, response) {
